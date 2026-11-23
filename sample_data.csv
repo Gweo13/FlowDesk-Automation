@@ -1,0 +1,7 @@
+order_id,customer_name,email,order_date,amount,status
+ORD001,Andi,andi@gmail.com,2026-11-20,250000,paid
+ORD002,Budi,budi@gmail.com,2026-11-21,150000,pending
+ORD003,Citra,citra@gmail.com,2026-11-21,300000,completed
+ORD004,Doni,doni-email.com,2026-11-22,100000,paid
+ORD005,Eka,eka@gmail.com,2026-11-22,-50000,pending
+ORD002,Fajar,fajar@gmail.com,2026-11-23,200000,paid
