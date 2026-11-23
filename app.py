@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from pathlib import Path
 
 from modules.processor import clean_data
 from modules.validator import validate_data
@@ -155,6 +156,50 @@ uploaded_file = st.file_uploader(
     "Choose a CSV or Excel file",
     type=["csv", "xlsx"]
 )
+# One-Click Demo
+st.caption(
+    "Don't have a dataset? Try the application using our sample data."
+)
+
+if st.button(
+    "🚀 Try Demo with Sample Data",
+    use_container_width=True
+):
+    try:
+        sample_path = Path(__file__).parent / "sample_data.csv"
+        raw_data = pd.read_csv(sample_path)
+
+        st.session_state["demo_data"] = raw_data
+        st.session_state["demo_source"] = "Built-in Sample Data"
+
+    except Exception as e:
+        st.error(f"Demo failed: {str(e)}")
+
+
+# Demo Data Preview
+if "demo_data" in st.session_state:
+    st.success("Sample dataset loaded successfully!")
+
+    with st.expander("👀 Preview Raw Sample Data", expanded=True):
+        st.dataframe(
+            st.session_state["demo_data"],
+            use_container_width=True,
+            hide_index=True
+        )
+
+    if st.button(
+        "🚀 Run Automation on Sample Data",
+        type="primary",
+        use_container_width=True
+    ):
+        with st.spinner("Cleaning and validating sample data..."):
+            cleaned_data = clean_data(st.session_state["demo_data"])
+            result = validate_data(cleaned_data)
+
+            st.session_state["result"] = result
+            st.session_state["source_file"] = "Built-in Sample Data"
+
+        st.success("Automation completed successfully!")
 
 
 # ==========================================
